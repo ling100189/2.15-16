@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2027 北海道｜2/15・2/16 行程二選一</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Huninn&display=swap');
+
+:root{
+  --paper:#FFFCF6;
+  --ink:#3E3A39;
+  --coral:#F2A497;
+  --yellow:#F6D27A;
+  --blue:#A8D3E6;
+  --green:#B9DAA5;
+  --soft:#FFF8EE;
+  --white:#FFFFFF;
+  --radius:24px;
+  --shadow:5px 5px 0 var(--ink);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Huninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  line-height:1.75;
+  font-size:16px;
+}
+button{font:inherit;color:inherit}
+.wrap{
+  width:min(100%,980px);
+  margin:auto;
+  padding:18px 14px 54px;
+}
+.hero{
+  position:relative;
+  overflow:hidden;
+  background:var(--blue);
+  border:3px solid var(--ink);
+  border-radius:30px;
+  padding:26px 20px 22px;
+  box-shadow:var(--shadow);
+  margin-bottom:26px;
+}
+.hero-copy{position:relative;z-index:2;max-width:72%}
+.eyebrow{
+  display:inline-block;
+  padding:5px 12px;
+  background:var(--paper);
+  border:3px solid var(--ink);
+  border-radius:999px;
+  font-weight:700;
+  font-size:14px;
+}
+h1{
+  margin:12px 0 7px;
+  font-size:clamp(28px,7vw,44px);
+  line-height:1.2;
+  letter-spacing:.02em;
+}
+.hero p{margin:0;font-size:16px}
+.hero-art{
+  position:absolute;
+  right:8px;
+  bottom:4px;
+  width:190px;
+  height:150px;
+  z-index:1;
+  animation:floaty 4s ease-in-out infinite;
+}
+.tabs{
+  display:flex;
+  gap:10px;
+  margin:0 0 18px;
+}
+.tab{
+  flex:1;
+  border:3px solid var(--ink);
+  background:var(--paper);
+  border-radius:18px;
+  padding:12px 15px;
+  font-weight:700;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:3px 3px 0 var(--ink);
+  transition:transform .18s ease, background .18s ease;
+}
+.tab.active{
+  background:var(--coral);
+  transform:translateY(-3px);
+}
+.tab:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.plan{animation:pop .42s cubic-bezier(.2,.9,.3,1)}
+.day{
+  position:relative;
+  background:var(--white);
+  border:3px solid var(--ink);
+  border-radius:var(--radius);
+  padding:20px 17px;
+  margin:20px 0;
+  box-shadow:4px 4px 0 var(--ink);
+  overflow:hidden;
+}
+.day:before{
+  content:"";
+  position:absolute;
+  width:76px;height:76px;
+  border-radius:50%;
+  right:-20px;top:-20px;
+  background:var(--yellow);
+  border:3px solid var(--ink);
+}
+.day-head{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  border-bottom:3px dashed var(--ink);
+  padding-bottom:14px;
+  margin-bottom:14px;
+}
+.date{
+  display:inline-block;
+  padding:3px 9px;
+  background:var(--green);
+  border:2px solid var(--ink);
+  border-radius:10px;
+  font-weight:700;
+}
+h2{font-size:25px;line-height:1.35;margin:7px 0 4px}
+.sub{font-size:14px}
+.tag{
+  flex:none;
+  background:var(--yellow);
+  border:3px solid var(--ink);
+  border-radius:999px;
+  padding:5px 10px;
+  font-size:13px;
+  font-weight:700;
+}
+.tag.warm{background:var(--coral)}
+.route{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:7px;
+  margin:15px 0 18px;
+}
+.stop{
+  background:var(--soft);
+  border:2px solid var(--ink);
+  border-radius:13px;
+  padding:6px 10px;
+  font-size:14px;
+}
+.arrow{font-weight:700}
+.timeline{display:grid;gap:9px}
+.item{
+  display:grid;
+  grid-template-columns:82px 1fr;
+  gap:11px;
+  padding:11px 0;
+  border-bottom:2px dashed #9c9692;
+}
+.item:last-child{border-bottom:0}
+.time{
+  align-self:start;
+  background:var(--blue);
+  border:2px solid var(--ink);
+  border-radius:10px;
+  padding:2px 7px;
+  font-weight:700;
+  font-size:13px;
+  text-align:center;
+}
+.item strong{display:block;font-size:16px}
+.item span{display:block;font-size:13px}
+.meal{
+  margin-top:15px;
+  padding:14px;
+  background:var(--yellow);
+  border:3px solid var(--ink);
+  border-radius:16px;
+}
+.meal strong{font-size:16px}
+.footer{
+  margin-top:30px;
+  text-align:center;
+  font-size:13px;
+}
+.plan .day:nth-child(odd) .day:before{background:var(--coral)}
+@keyframes floaty{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-7px) rotate(1deg)}
+}
+@keyframes pop{
+  0%{opacity:0;transform:scale(.96) translateY(8px)}
+  70%{transform:scale(1.015) translateY(-2px)}
+  100%{opacity:1;transform:scale(1) translateY(0)}
+}
+@media(max-width:680px){
+  .hero{padding:22px 17px 18px}
+  .hero-copy{max-width:100%;padding-bottom:105px}
+  .hero-art{width:170px;height:130px;right:2px;bottom:-2px}
+  .day{padding:18px 14px}
+  .day-head{display:block}
+  .tag{display:inline-block;margin-top:8px}
+  .item{grid-template-columns:75px 1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">2027 北海道｜2/15・2/16 行程選擇</div>
+    <h1>兩種一日行程，選你喜歡的版本</h1>
+    <p>兩天皆從札幌出發、當日返回。主題以文化、歷史與北海道特色為主。</p>
+    
+    <svg class="hero-art" viewBox="0 0 700 210" role="img" aria-label="北海道旅行手繪插圖">
+      <!-- 山 -->
+      <path d="M25 174 L135 65 L202 130 L282 48 L390 174 Z"
+            fill="#A8D3E6" stroke="#3E3A39" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M105 97 L135 65 L158 95 L143 89 L132 105 Z"
+            fill="#FFFCF6" stroke="#3E3A39" stroke-width="5" stroke-linejoin="round"/>
+      <!-- 札幌時計台 -->
+      <g class="float">
+        <rect x="448" y="93" width="92" height="81" rx="5" fill="#F6D27A" stroke="#3E3A39" stroke-width="7"/>
+        <path d="M438 95 L551 95 L534 70 L454 70 Z" fill="#F2A497" stroke="#3E3A39" stroke-width="7" stroke-linejoin="round"/>
+        <path d="M466 70 L466 48 L525 48 L525 70" fill="#B9DAA5" stroke="#3E3A39" stroke-width="7"/>
+        <circle cx="495" cy="58" r="8" fill="#FFFCF6" stroke="#3E3A39" stroke-width="4"/>
+        <circle cx="495" cy="118" r="23" fill="#FFFCF6" stroke="#3E3A39" stroke-width="5"/>
+        <path d="M495 118 L495 103 M495 118 L507 126" stroke="#3E3A39" stroke-width="4" stroke-linecap="round"/>
+        <rect x="470" y="145" width="22" height="29" fill="#A8D3E6" stroke="#3E3A39" stroke-width="5"/>
+        <rect x="501" y="145" width="22" height="29" fill="#A8D3E6" stroke="#3E3A39" stroke-width="5"/>
+      </g>
+      <!-- 小巴士 -->
+      <g class="float delay">
+        <rect x="270" y="119" width="120" height="51" rx="15" fill="#F2A497" stroke="#3E3A39" stroke-width="7"/>
+        <rect x="285" y="131" width="34" height="21" rx="4" fill="#A8D3E6" stroke="#3E3A39" stroke-width="4"/>
+        <rect x="325" y="131" width="34" height="21" rx="4" fill="#A8D3E6" stroke="#3E3A39" stroke-width="4"/>
+        <circle cx="294" cy="171" r="10" fill="#3E3A39"/>
+        <circle cx="363" cy="171" r="10" fill="#3E3A39"/>
+      </g>
+      <!-- 雪花 -->
+      <g class="float delay2" fill="none" stroke="#3E3A39" stroke-width="4" stroke-linecap="round">
+        <path d="M60 34 L60 55 M50 44 L70 44 M53 37 L67 51 M67 37 L53 51"/>
+        <path d="M335 25 L335 45 M326 35 L344 35 M329 29 L341 41 M341 29 L329 41"/>
+        <path d="M610 35 L610 57 M600 46 L620 46 M603 39 L617 53 M617 39 L603 53"/>
+      </g>
+      <!-- 地面 -->
+      <path d="M18 178 Q160 165 285 178 T680 177" fill="none" stroke="#3E3A39" stroke-width="7" stroke-linecap="round"/>
+    </svg>
+    
+    
+    <svg class="hero-illustration" viewBox="0 0 700 180" aria-label="北海道旅行插圖" role="img">
+      <!-- mountain -->
+      <path d="M35 148 L150 48 L220 108 L300 28 L430 148 Z"
+            fill="#B9DAA5" stroke="#3E3A39" stroke-width="7" stroke-linejoin="round"/>
+      <path d="M120 75 L150 48 L178 88 L158 78 L145 93 Z"
+            fill="#FFFCF6" stroke="#3E3A39" stroke-width="5" stroke-linejoin="round"/>
+      <!-- sun -->
+      <circle cx="555" cy="52" r="27" fill="#F6D27A" stroke="#3E3A39" stroke-width="7"/>
+      <path d="M555 13v-8 M555 89v8 M516 52h-8 M594 52h8"
+            stroke="#3E3A39" stroke-width="6" stroke-linecap="round"/>
+      <!-- train -->
+      <g class="floaty">
+        <rect x="375" y="92" width="190" height="55" rx="13" fill="#F2A497" stroke="#3E3A39" stroke-width="7"/>
+        <rect x="397" y="105" width="43" height="25" rx="5" fill="#A8D3E6" stroke="#3E3A39" stroke-width="5"/>
+        <rect x="451" y="105" width="43" height="25" rx="5" fill="#A8D3E6" stroke="#3E3A39" stroke-width="5"/>
+        <rect x="505" y="105" width="37" height="25" rx="5" fill="#A8D3E6" stroke="#3E3A39" stroke-width="5"/>
+        <circle cx="420" cy="151" r="12" fill="#3E3A39"/>
+        <circle cx="523" cy="151" r="12" fill="#3E3A39"/>
+      </g>
+      <!-- small flag -->
+      <path d="M278 120 V54 M278 57 Q307 47 332 59 L278 76 Z"
+            fill="#F2A497" stroke="#3E3A39" stroke-width="6" stroke-linejoin="round"/>
+      <!-- snow dots -->
+      <g class="floaty delay" fill="#FFFCF6" stroke="#3E3A39" stroke-width="3">
+        <circle cx="65" cy="30" r="6"/><circle cx="95" cy="78" r="5"/>
+        <circle cx="345" cy="18" r="5"/><circle cx="625" cy="105" r="6"/>
+      </g>
+    </svg>
+    
+    <div class="notice">
+      <strong>怎麼選？</strong><br>
+      想讓整趟旅程變化更多、深入了解北海道歷史 → <strong>方案 A</strong><br>
+      想少移動、兩天都以札幌市區文化為主 → <strong>方案 B</strong>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <button class="tab active" role="tab" aria-selected="true" onclick="showPlan('A', this)">方案 A</button>
+    <button class="tab" role="tab" aria-selected="false" onclick="showPlan('B', this)">方案 B</button>
+  </div>
+
+  <div id="planA" class="plan">
+  <section class="day">
+    <div class="day-head">
+      <div>
+        <div class="date">方案 A｜2/15</div>
+        <h2>北海道開拓歷史一日遊</h2>
+        <div class="sub">北海道開拓之村 → 午餐 → 北海道博物館 → 札幌</div>
+      </div>
+      <span class="tag">文化重點日</span>
+    </div>
+
+    <div class="route">
+      <div class="stop">飯店</div><div class="arrow">→</div>
+      <div class="stop">新札幌</div><div class="arrow">→</div>
+      <div class="stop">北海道開拓之村</div><div class="arrow">→</div>
+      <div class="stop">北海道博物館</div><div class="arrow">→</div>
+      <div class="stop">札幌</div>
+    </div>
+
+    <div class="timeline">
+      <div class="item"><div class="time">08:30</div><div><strong>飯店出發</strong><span>前往新札幌，再轉巴士至開拓之村。</span></div></div>
+      <div class="item"><div class="time">10:00–12:00</div><div><strong>北海道開拓之村</strong><span>歷史建築、市街地、漁村、農村、山村等區域；冬季雪景也很有特色。</span></div></div>
+      <div class="item"><div class="time">12:00–13:00</div><div><strong>開拓之村食堂午餐</strong><span>建議直接在園區內用餐，不必為了午餐往返新札幌。</span></div></div>
+      <div class="item"><div class="time">13:00–13:30</div><div><strong>前往北海道博物館</strong><span>由開拓之村前往北海道博物館。</span></div></div>
+      <div class="item"><div class="time">13:30–15:45</div><div><strong>北海道博物館</strong><span>自然、愛努文化、北海道歷史、開拓與近代發展；建議保留約2小時以上。</span></div></div>
+      <div class="item"><div class="time">15:45–17:00</div><div><strong>返回札幌</strong><span>北海道博物館 → 新札幌 → 札幌 → 飯店。</span></div></div>
+      <div class="item"><div class="time">17:00～</div><div><strong>回飯店休息／晚餐</strong><span>晚上不再安排主要景點，保留體力。</span></div></div>
+    </div>
+
+    <div class="meal">
+      <strong>🍴 午餐推薦｜開拓之村食堂</strong><br>
+      首推：<strong>屯田兵定食</strong>。主題與當天的北海道開拓歷史最搭。<br>
+      其他可選：鯡魚蕎麥麵、開拓蕎麥麵、札幌味噌拉麵、北海道牛肉咖哩。
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <div>
+        <div class="date">方案 A｜2/16</div>
+        <h2>札幌文化一日遊</h2>
+        <div class="sub">北海道大學 → 綜合博物館 → 札幌啤酒博物館</div>
+      </div>
+      <span class="tag">學術＋產業文化</span>
+    </div>
+
+    <div class="route">
+      <div class="stop">飯店</div><div class="arrow">→</div>
+      <div class="stop">北海道大學</div><div class="arrow">→</div>
+      <div class="stop">綜合博物館</div><div class="arrow">→</div>
+      <div class="stop">札幌站附近午餐</div><div class="arrow">→</div>
+      <div class="stop">札幌啤酒博物館</div><div class="arrow">→</div>
+      <div class="stop">飯店</div>
+    </div>
+
+    <div class="timeline">
+      <div class="item"><div class="time">09:00</div><div><strong>飯店出發</strong><span>前往北海道大學。</span></div></div>
+      <div class="item"><div class="time">09:30–10:00</div><div><strong>北海道大學校園</strong><span>以札幌農學校歷史、校園代表景點與雪景為主，不需要整個校園走完。</span></div></div>
+      <div class="item"><div class="time">10:00–12:30</div><div><strong>北海道大學綜合博物館</strong><span>安排較充裕的時間慢慢看展，這天不需要為了趕景點快速離開。</span></div></div>
+      <div class="item"><div class="time">12:30–13:30</div><div><strong>午餐</strong><span>建議在北海道大學／札幌站附近解決，減少額外移動。</span></div></div>
+      <div class="item"><div class="time">13:30–14:15</div><div><strong>前往札幌啤酒博物館</strong><span>札幌站 → JR苗穗站，再步行前往。</span></div></div>
+      <div class="item"><div class="time">14:15–15:45</div><div><strong>札幌啤酒博物館</strong><span>了解札幌啤酒從北海道開拓時期開始的發展；可搭配導覽與品酒。</span></div></div>
+      <div class="item"><div class="time">15:45–16:30</div><div><strong>札幌啤酒園／周邊</strong><span>逛商店、看紅磚建築；不喝酒也可以直接離開。</span></div></div>
+      <div class="item"><div class="time">16:30–17:15</div><div><strong>返回飯店</strong><span>傍晚回飯店休息。</span></div></div>
+    </div>
+
+    <div class="meal">
+      <strong>🍴 午餐推薦｜北海道大學／札幌站附近</strong><br>
+      建議不要特別繞路找名店，將時間留給綜合博物館。若想吃得正式一點，可選札幌站周邊北海道料理。
+    </div>
+  </section>
+  </div>
+
+  <div id="planB" class="plan" style="display:none">
+  <section class="day">
+    <div class="day-head">
+      <div>
+        <div class="date">方案 B｜2/15</div>
+        <h2>札幌城市歷史一日遊</h2>
+        <div class="sub">二條市場 → 札幌電視塔 → 大通公園 → 時計台 → 舊本廳舍 → 札幌站</div>
+      </div>
+      <span class="tag warm">市中心輕鬆版</span>
+    </div>
+
+    <div class="route">
+      <div class="stop">飯店</div><div class="arrow">→</div>
+      <div class="stop">二條市場</div><div class="arrow">→</div>
+      <div class="stop">札幌電視塔</div><div class="arrow">→</div>
+      <div class="stop">大通公園 西1～3丁目</div><div class="arrow">→</div>
+      <div class="stop">札幌市時計台</div><div class="arrow">→</div>
+      <div class="stop">北海道廳舊本廳舍</div><div class="arrow">→</div>
+      <div class="stop">札幌站</div>
+    </div>
+
+    <div class="timeline">
+      <div class="item"><div class="time">09:00</div><div><strong>二條市場</strong><span>早餐／海鮮與市場散步。</span></div></div>
+      <div class="item"><div class="time">10:00</div><div><strong>札幌電視塔</strong><span>從大通公園東端開始札幌市中心行程。</span></div></div>
+      <div class="item"><div class="time">10:30</div><div><strong>大通公園 西1～3丁目</strong><span>不需要走完整個大通公園，集中看市中心核心區域。</span></div></div>
+      <div class="item"><div class="time">11:30–12:30</div><div><strong>午餐</strong><span>大通／狸小路一帶用餐。</span></div></div>
+      <div class="item"><div class="time">13:00</div><div><strong>札幌市時計台</strong><span>札幌開拓與城市發展的重要歷史地標。</span></div></div>
+      <div class="item"><div class="time">14:00</div><div><strong>北海道廳舊本廳舍</strong><span>北海道近代行政與開拓史相關建築。</span></div></div>
+      <div class="item"><div class="time">15:00–16:00</div><div><strong>札幌站</strong><span>可安排購物、咖啡或休息。</span></div></div>
+      <div class="item"><div class="time">16:00～</div><div><strong>返回飯店</strong><span>晚上自由活動。</span></div></div>
+    </div>
+
+    <div class="meal">
+      <strong>🍴 午餐方向</strong><br>
+      建議安排在大通／狸小路一帶，選北海道料理、湯咖哩、壽司或拉麵即可；不需要為了午餐增加移動距離。
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <div>
+        <div class="date">方案 B｜2/16</div>
+        <h2>札幌文化深度一日遊</h2>
+        <div class="sub">北海道大學 → 綜合博物館 → 札幌啤酒博物館</div>
+      </div>
+      <span class="tag warm">市區文化版</span>
+    </div>
+
+    <div class="route">
+      <div class="stop">飯店</div><div class="arrow">→</div>
+      <div class="stop">北海道大學</div><div class="arrow">→</div>
+      <div class="stop">綜合博物館</div><div class="arrow">→</div>
+      <div class="stop">午餐</div><div class="arrow">→</div>
+      <div class="stop">札幌啤酒博物館</div><div class="arrow">→</div>
+      <div class="stop">飯店</div>
+    </div>
+
+    <div class="timeline">
+      <div class="item"><div class="time">09:00</div><div><strong>飯店出發</strong><span>前往北海道大學。</span></div></div>
+      <div class="item"><div class="time">09:30–10:00</div><div><strong>北海道大學校園</strong><span>集中參觀代表性校園景觀與歷史區域。</span></div></div>
+      <div class="item"><div class="time">10:00–12:30</div><div><strong>北海道大學綜合博物館</strong><span>保留較充裕時間，適合玉慢慢看展。</span></div></div>
+      <div class="item"><div class="time">12:30–13:30</div><div><strong>午餐</strong><span>北海道大學／札幌站附近。</span></div></div>
+      <div class="item"><div class="time">13:30–14:15</div><div><strong>前往札幌啤酒博物館</strong><span>札幌站 → JR苗穗站 → 步行。</span></div></div>
+      <div class="item"><div class="time">14:15–15:45</div><div><strong>札幌啤酒博物館</strong><span>札幌啤酒發展史、北海道產業文化與相關展示。</span></div></div>
+      <div class="item"><div class="time">15:45–16:30</div><div><strong>周邊散步／商店</strong><span>視體力決定是否停留。</span></div></div>
+      <div class="item"><div class="time">16:30–17:15</div><div><strong>返回飯店</strong><span>晚上自由活動。</span></div></div>
+    </div>
+
+    <div class="meal">
+      <strong>🍴 午餐方向</strong><br>
+      建議在北海道大學／札幌站附近用餐，避免為了吃飯繞路。
+    </div>
+  </section>
+  </div>
+
+  <div class="footer">2027 北海道｜2/15・2/16 行程選擇</div>
+</div>
+
+<script>
+function showPlan(plan, button){
+  document.getElementById('planA').style.display = plan === 'A' ? 'block' : 'none';
+  document.getElementById('planB').style.display = plan === 'B' ? 'block' : 'none';
+  document.querySelectorAll('.tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
+  button.classList.add('active');
+  button.setAttribute('aria-selected', 'true');
+  window.scrollTo({top: document.querySelector('.tabs').offsetTop - 12, behavior: 'smooth'});
+}
+</script>
+
+</body>
+</html>
